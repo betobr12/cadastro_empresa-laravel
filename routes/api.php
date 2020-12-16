@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*
+
 Route::get('/company'   ,'CompanyController@get');
 Route::post('/company'  ,'CompanyController@create');
 Route::put('/company'   ,'CompanyController@update');
@@ -30,4 +32,6 @@ Route::delete('/company_unity','CompanyUnityController@delete');
 Route::post('/unity_relationship','UnityRelationshipController@create');
 Route::get('/unity_relationship','UnityRelationshipController@get');
 Route::delete('/unity_relationship','UnityRelationshipController@delete');
+
+*/
 

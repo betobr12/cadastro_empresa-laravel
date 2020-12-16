@@ -9,7 +9,7 @@ class CompanyController extends Controller
 {
     public function index(){
 
-        return view('/');
+        return view('index');
     }
 
     protected function get(Request $request){
@@ -17,7 +17,31 @@ class CompanyController extends Controller
         $company->id           = $request->id;
         $company->cnpj         = $request->cnpj;
         $company->fantasy_name = $request->fantasy_name;
-        return response()->json($company->getCompany());
+        $items = [];
+        foreach($company->getCompany() as $comps){
+            array_push($items,(object)[                
+                'id'                        => $comps->id,
+                'cnpj'                      => $comps->cnpj,
+                'social_reason'             => $comps->social_reason,
+                'fantasy_name'              => $comps->fantasy_name,
+                'zip_code'                  => $comps->zip_code,
+                'public_place'              => $comps->public_place,
+                'number'                    => $comps->number,
+                'phone'                     => $comps->phone,
+                'email'                     => $comps->email,
+                'complement'                => $comps->complement,
+                'district'                  => $comps->district,
+                'city'                      => $comps->city,
+                'segment_id'                => $comps->segment_id,
+                'municipal_registration'    => $comps->municipal_registration,
+                'state_registration'        => $comps->state_registration,
+                'seg_description'           => $comps->seg_description,
+                'created_at'                => $comps->created_at,
+                'updated_at'                => $comps->updated_at,
+                'deleted_at'                => $comps->deleted_at,
+            ]);
+        }        
+        return view('company.list',compact('items'));
     }
 
     protected function create(Request $request){
