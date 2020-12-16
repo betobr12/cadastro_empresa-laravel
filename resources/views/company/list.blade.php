@@ -15,18 +15,15 @@
         </thead>
         <tbody>
             @foreach ($items as $comp)
-            <tr>
-                <td>{{$comp->id}}</td>
-                <td>{{$comp->cnpj}}</td>   
-                <td>{{$comp->social_reason}}</td>
-                <td>{{$comp->fantasy_name}}</td>
-                <td>{{$comp->seg_description}}</td>
-                <td></td>
-                             
-            </tr>              
+                <tr>
+                    <td>{{$comp->id}}</td>
+                    <td>{{$comp->cnpj}}</td>   
+                    <td>{{$comp->social_reason}}</td>
+                    <td>{{$comp->fantasy_name}}</td>
+                    <td>{{$comp->seg_description}}</td>
+                    <td></td>                             
+                </tr>              
             @endforeach
-
-
         </tbody>
     </table>
 </div>
