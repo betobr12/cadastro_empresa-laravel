@@ -28,7 +28,7 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
             <a class="dropdown-item" href="#">Empresas</a>
-            <a class="dropdown-item" href="#">Unidades</a>
+          <a class="dropdown-item" href="{{route('company_unity.create')}}">Unidades</a>
           </div>
         </div>
 

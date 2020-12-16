@@ -24,17 +24,25 @@ class CompanyUnityController extends Controller
         return view('company_unity.list',compact('items'));
     }
 
-    protected function create(Request $request){
+    protected function create(){
+        return view('');
+    }
+
+    protected function store(Request $request){
+        
         if(CompanyUnity::where('description','=',$request->description)->first()){  
-            return response()->json(array('success' => 'Unidade já cadastrada'));
+             response()->json(array('success' => 'Unidade já cadastrada'));
+             return redirect()->back();
         }else{  
             if(CompanyUnity::create([            
                 'description' =>$request->description,               
                 'created_at'  =>\Carbon\Carbon::now(),
             ])){
-                return response()->json(array('success' => 'Unidade Cadastrada com sucesso'));
+                response()->json(array('success' => 'Unidade Cadastrada com sucesso'));
+                return view('index');
             }else{
-                return response()->json(array('error' => 'Erro ao cadastrar a Unidade'));
+                response()->json(array('error' => 'Erro ao cadastrar a Unidade'));
+                return redirect()->back();
             } 
         }         
     }

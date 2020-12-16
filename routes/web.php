@@ -24,11 +24,12 @@ Route::post('/company'  ,'CompanyController@create');
 Route::put('/company'   ,'CompanyController@update');
 Route::delete('/company','CompanyController@delete');
 
-Route::get('/company_unity'   ,'CompanyUnityController@get')->name('company_unity.list');
-Route::post('/company_unity'  ,'CompanyUnityController@create');
-Route::put('/company_unity'   ,'CompanyUnityController@update');
-Route::delete('/company_unity','CompanyUnityController@delete');
+Route::get('/company_unity'             ,'CompanyUnityController@store')->name('company_unity.store');
+Route::get('/company_unity'             ,'CompanyUnityController@get')->name('company_unity.list');
+Route::resource('/company_unity'     ,'CompanyUnityController');
+Route::put('/company_unity'             ,'CompanyUnityController@update');
+Route::delete('/company_unity'          ,'CompanyUnityController@delete');
 
-Route::post('/unity_relationship','UnityRelationshipController@create');
-Route::get('/unity_relationship','UnityRelationshipController@get');
-Route::delete('/unity_relationship','UnityRelationshipController@delete');
+Route::post('/unity_relationship'       ,'UnityRelationshipController@create');
+Route::get('/unity_relationship'        ,'UnityRelationshipController@get');
+Route::delete('/unity_relationship'     ,'UnityRelationshipController@delete');
