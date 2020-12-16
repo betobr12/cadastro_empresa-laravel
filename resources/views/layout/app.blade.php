@@ -7,22 +7,30 @@
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 </head>
+<body> 
   <title>Cadastro de Empresas</title>
-</head>
-<body>
-  
+
 <!--navbar -->
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">EmpCad</a>
+      <a class="navbar-brand" href="{{route('index')}}">EmpCad</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-        <li class="nav-item {{ (Route::current()->getName() === 'site.home' ? 'active' : '') }}"><a class="nav-link" href="{{route('index')}}">Home</a></li>
-        <li class="nav-item {{ (Route::current()->getName() === 'site.courses' ? 'active' : '') }}"><a class="nav-link" href="{{route('company.list')}}">Empresas</a></li>
-          <li class="nav-item {{ (Route::current()->getName() === 'site.contact' ? 'active' : '') }}"><a class="nav-link" href="">Unidades</a></li>
+        <li class="nav-item {{ (Route::current()->getName() === 'index' ? 'active' : '') }}"><a class="nav-link" href="{{route('index')}}">Home</a></li>
+        <li class="nav-item {{ (Route::current()->getName() === 'company.list' ? 'active' : '') }}"><a class="nav-link" href="{{route('company.list')}}">Empresas</a></li>
+        <li class="nav-item {{ (Route::current()->getName() === 'site.contact' ? 'active' : '') }}"><a class="nav-link" href="{{route('company_unity.list')}}">Unidades</a></li>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Cadastrar
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="#">Empresas</a>
+            <a class="dropdown-item" href="#">Unidades</a>
+          </div>
+        </div>
 
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -32,23 +40,15 @@
       </div>
     </nav>
   </header>
-  
-
     <!--main -->
-    <main role="main">
-      
-        @yield('content')
-      
-      
-        <!-- FOOTER -->
-        <footer class="container">
-              <p class="float-right"><a href="#">Voltar</a></p>
-              <p>&copy; {{ date('Y')}} Company, Inc. &middot; <a href="#">Privacidade</a> &middot; <a href="#">Terms</a></p>
-        </footer>
-    </main>
-    
-
-    
+  <main role="main">      
+      @yield('content')
+  </main>
+  <!--footer-->
+  <div class="card-footer bg-dark text-white card-footer-new">
+    <p class="float-right"><a href="#" class="btn btn-primary btn-sm bg-dark text-white">Voltar</a></p>
+    <p>&copy; {{ date('Y')}} Company, Betobr12. &middot; <a href="#">Privacidade</a> &middot; <a href="#">Terms</a></p>
+  </div>
   <script src="{{asset('js/jquery.js')}}"></script>
   <script src="{{asset('js/bootstrap.js')}}"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>

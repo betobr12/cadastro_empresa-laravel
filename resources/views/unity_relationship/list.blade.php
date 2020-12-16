@@ -6,21 +6,15 @@
         <thead class="bg-dark text-white">
             <tr>
                 <th>ID</th>
-                <th>CNPJ</th>
                 <th>Nome</th>
-                <th>Nome Fantasia</th>
-                <th>Seguimento</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($items as $comp)
+            @foreach ($items as $comp_uny)
                 <tr>
-                    <td>{{$comp->id}}</td>
-                    <td>{{$comp->cnpj}}</td>   
-                    <td>{{$comp->social_reason}}</td>
-                    <td>{{$comp->fantasy_name}}</td>
-                    <td>{{$comp->seg_description}}</td>
+                    <td>{{$comp_uny->id}}</td>
+                    <td>{{$comp_uny->description}}</td>   
                     <td></td>                             
                 </tr>              
             @endforeach

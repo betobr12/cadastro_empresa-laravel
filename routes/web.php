@@ -24,7 +24,7 @@ Route::post('/company'  ,'CompanyController@create');
 Route::put('/company'   ,'CompanyController@update');
 Route::delete('/company','CompanyController@delete');
 
-Route::get('/company_unity'   ,'CompanyUnityController@get');
+Route::get('/company_unity'   ,'CompanyUnityController@get')->name('company_unity.list');
 Route::post('/company_unity'  ,'CompanyUnityController@create');
 Route::put('/company_unity'   ,'CompanyUnityController@update');
 Route::delete('/company_unity','CompanyUnityController@delete');

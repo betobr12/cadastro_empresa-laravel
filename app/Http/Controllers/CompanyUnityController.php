@@ -11,7 +11,17 @@ class CompanyUnityController extends Controller
         $CompanyUnity = new CompanyUnity();
         $CompanyUnity->id           = $request->id;
         $CompanyUnity->description  = $request->description;
-        return response()->json($CompanyUnity->getCompanyUnity());
+
+        $items = [];
+
+        foreach($CompanyUnity->getCompanyUnity() as $comps_u){
+            array_push($items,(object)[                
+                'id'          => $comps_u->id,
+                'description' => $comps_u->description,                
+                'created_at'  => $comps_u->created_at,
+            ]);
+        }        
+        return view('company_unity.list',compact('items'));
     }
 
     protected function create(Request $request){

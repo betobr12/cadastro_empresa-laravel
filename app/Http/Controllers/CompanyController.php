@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\CompanyUnity;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
     public function index(){
+        $Company = Company::all();
+        $CompanyUnity = CompanyUnity::all();
+        $count =  $Company->count();
 
-        return view('index');
+        return view('index',compact('Company','CompanyUnity','count'));
     }
 
     protected function get(Request $request){
-        $company = new Company();
+        $company               = new Company();
         $company->id           = $request->id;
         $company->cnpj         = $request->cnpj;
         $company->fantasy_name = $request->fantasy_name;
