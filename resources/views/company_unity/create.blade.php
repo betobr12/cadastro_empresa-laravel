@@ -10,8 +10,15 @@
 </div>
 
  <div class="container py-5">
-    <form action="{{ route('company_unity.update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('company_unity.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @if (isset($errors) && count($errors) > 0)
+        <div class="alert alert-danger">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+        @endif
         <div class="form-group">
           <label for="description">Nome da Unidade</label>
           <input type="text" class="form-control" name="description" id="description" aria-describedby="description">

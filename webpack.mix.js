@@ -15,4 +15,5 @@ mix
 
 .scripts('node_modules/jquery/dist/jquery.js','public/js/jquery.js')
 .scripts('node_modules/bootstrap/dist/js/bootstrap.bundle.js','public/js/bootstrap.js')
-.sass('resources/views/scss/styles.scss','public/css/styles.css');
+.sass('resources/views/scss/styles.scss','public/css/styles.css')
+.scripts('node_modules/sweetalert2/dist/sweetalert2.min.css','public/css/sweetalert2.min.css');

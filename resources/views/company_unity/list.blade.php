@@ -14,9 +14,18 @@
             @foreach ($items as $comp_uny)
                 <tr>
                     <td>{{$comp_uny->id}}</td>
-                    <td>{{$comp_uny->description}}</td>   
-                    <td></td>                             
-                </tr>              
+                    <td>{{$comp_uny->description}}</td>
+                    <td>
+                        <a href="{{route('company_unity.edit', $comp_uny->id)}}" class="btn btn-primary">Alterar</a>
+                        <button class="btn btn-danger" type="button" onclick="deleteAll({{ $comp_uny->id }})">
+                            Excluir
+                        </button>
+                        <form id="delete-form-{{ $comp_uny->id }}" action="{{ route('company_unity.destroy',$comp_uny->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

@@ -18,15 +18,18 @@ class CompanyUnity extends Model
         'updated_at',
         'deleted_at',
     ];
+
     public function getCompanyUnity(){
-        return DB::table('company_unities')
+        return DB::table('company_unities as comp_u')
         ->selectRaw("
-            id,
-            description,
-            created_at
+            comp_u.id,
+            comp_u.description,
+            comp_u.created_at,
+            comp_u.deleted_at
         ")
+        ->whereNull('comp_u.deleted_at')
         ->get();
     }
 
-   
+
 }

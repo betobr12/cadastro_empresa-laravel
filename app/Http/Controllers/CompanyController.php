@@ -5,16 +5,10 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyUnity;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class CompanyController extends Controller
 {
-    public function index(){
-        $Company = Company::all();
-        $CompanyUnity = CompanyUnity::all();
-        $count =  $Company->count();
-
-        return view('index',compact('Company','CompanyUnity','count'));
-    }
 
     protected function get(Request $request){
         $company               = new Company();
@@ -23,7 +17,7 @@ class CompanyController extends Controller
         $company->fantasy_name = $request->fantasy_name;
         $items = [];
         foreach($company->getCompany() as $comps){
-            array_push($items,(object)[                
+            array_push($items,(object)[
                 'id'                        => $comps->id,
                 'cnpj'                      => $comps->cnpj,
                 'social_reason'             => $comps->social_reason,
@@ -44,35 +38,48 @@ class CompanyController extends Controller
                 'updated_at'                => $comps->updated_at,
                 'deleted_at'                => $comps->deleted_at,
             ]);
-        }        
+        }
         return view('company.list',compact('items'));
     }
 
-    protected function create(Request $request){
+    protected function create(){
+        return view('company.create');
+    }
 
-        if(Company::where('cnpj','=',$request->cnpj)->first()){
-            return response()->json(array('error' => 'Empresa ja foi cadastrada'));
+    protected function store(Request $request){
+
+        $CompanyUnity = CompanyUnity::all();
+        $Company      = Company::all();
+
+        $cnpj = preg_replace('/[^0-9]/', '',$request->cnpj);
+
+
+        if(Company::where('cnpj','=',$cnpj)->first()){
+            Toastr::error('Empresa ja foi cadastrada','Erro');
+            return redirect()->back();
         }else{
             if(Company::create([
-                'cnpj'                      =>$request->cnpj,
-                'social_reason'             =>$request->social_reason,
-                'fantasy_name'              =>$request->fantasy_name,
-                'zip_code'                  =>$request->zip_code,
-                'public_place'              =>$request->public_place,
-                'number'                    =>$request->number,
-                'phone'                     =>$request->phone,
-                'email'                     =>$request->email,
-                'complement'                =>$request->complement,
-                'district'                  =>$request->district,
-                'city'                      =>$request->city,
-                'segment_id'                =>$request->segment_id,
-                'municipal_registration'    =>$request->municipal_registration,
-                'state_registration'        =>$request->state_registration,
+                'cnpj'                      =>  $cnpj,
+                'social_reason'             => $request->razao,
+               // 'fantasy_name'              =>$request->fantasy_name,
+                //'zip_code'                  =>$request->zip_code,
+                'public_place'              =>$request->logradouro,
+                'number'                    =>$request->numero,
+              //  'phone'                     =>$request->fone1,
+              //  'email'                     =>$request->email,
+               // 'complement'                =>$request->complement,
+                'district'                  =>$request->bairro,
+              //  'city'                      =>$request->city,
+               // 'segment_id'                =>$request->segment_id,
+              //  'municipal_registration'    =>$request->municipal_registration,
+               // 'state_registration'        =>$request->state_registration,
                 'created_at'                =>\Carbon\Carbon::now(),
             ])){
-                return response()->json(array('success' => 'Empresa Cadastrada com sucesso'));
+                Toastr::success('Empresa Cadastrada com sucesso','Sucesso');
+                return redirect()->route('index', compact('CompanyUnity','Company'));
             }else{
-                return response()->json(array('error' => 'Erro ao cadastrar a Empresa'));
+                Toastr::error('Erro ao cadastrar a Empresa','Erro');
+                return redirect()->back();
             }
 
         }
