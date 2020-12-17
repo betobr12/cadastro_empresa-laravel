@@ -99,7 +99,6 @@
     }
 </script>
 <script src="{{ asset('js/jquery.receita-ws.js') }}"></script>
-
 <script>
     $(document).ready(function () {
         function fecharMensagem() {
@@ -108,7 +107,6 @@
                 $('#cnpj').prop('disabled', false);
             }, 2000);
         }
-
         $('#cnpj').receitaws({
             afterRequest: function () {
                 var cnpj = $('#cnpj').val();
@@ -136,11 +134,15 @@
             fields: {
                 nome: '#razao',
                 fantasia: '#fantasia',
+                cep: '#cep',
                 logradouro: '#logradouro',
                 numero: '#numero',
                 bairro: '#bairro',
                 municipio: '#municipio',
-                uf: '#uf',
+                uf: '#uf',                
+                email: '#email',
+                telefone: '#telefone',
+                complemento: '#complemento',
 
                 telefone: function (data) {
                     var separa = data.split('/');
@@ -159,7 +161,6 @@
                 }
             }
         });
-
     });
 </script>
 

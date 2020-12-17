@@ -13,10 +13,7 @@
             },
             fields: {},
             urlRequest: '../dist/php/receita-ws.php'
-            //urlRequest: '../../app/Http/libraries/ReceitaWS.php'
-             //urlRequest: '../../app/Http/libraries/receita-ws.php'
         };
-
         /*
          Duplicate request controller. (Cache)
          */
@@ -24,7 +21,6 @@
             cnpj: null,
             data: null
         };
-
 
         function getData(cnpj) {
             cnpj = cnpj.replace(/\D/g, '');
@@ -46,8 +42,6 @@
                 }
             });
         }
-
-
         $.fn.receitaws.init = function (options) {
 
             $.fn.receitaws.options = $.extend({}, $.fn.receitaws.options, options);
@@ -73,7 +67,7 @@
 
                         options.success(data);
                     } else {
-                        options.notfound('CNPJ "' + $this.val() + '" not found.');
+                        options.notfound('CNPJ "' + $this.val() + '" Dados não encontrados.');
                     }
 
                 }, function (error) {
@@ -81,7 +75,6 @@
                 });
             });
         };
-
         return $.fn.receitaws.init(options);
     };
 })(jQuery);

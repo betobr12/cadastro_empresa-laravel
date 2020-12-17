@@ -1,7 +1,7 @@
 
 
 <?php
-/*
+
 namespace App\Libraries;
 use App\Libraries\GuzzleRequests;
 
@@ -11,8 +11,7 @@ class ViaCep{
     public function sendAPIRequest($type){
         $apiRequest = new GuzzleRequests();
         $apiRequest->uri         = $this->endpoint;
-        //$apiRequest->headers     = $this->header;
-        //$apiRequest->parameters  = $this->params;
+
         switch($type){
             case 'get':
                 return $apiRequest->getRequest();
@@ -34,4 +33,4 @@ class ViaCep{
     }
 
 }
-*/
+

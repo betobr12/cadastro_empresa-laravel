@@ -28,14 +28,20 @@
                         <input type="text" id="razao" name="razao" class="form-control input-sn"/><br>
                        <!-- <label for="responsavel">Responsável:</label>
                         <input type="text" id="responsavel" name="responsavel" class="form-control input-sn"/><br>-->
-                        <label for="fone1">Telefone 1:</label>
+                        <label for="fone1">Telefone:</label>
                         <input type="text" id="fone1" name="fone1" class="form-control input-sn"/><br>
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" class="form-control input-sn"/><br>
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" name="cep" class="form-control input-sn"/><br>
                         <label for="logradouro">Logradouro:</label>
                         <input type="text" id="logradouro" name="logradouro" class="form-control input-sn"/><br>
                         <label for="numero">Número:</label>
                         <input type="text" id="numero" name="numero" class="form-control input-sn"/><br>
                         <label for="bairro">Bairro:</label>
                         <input type="text" id="bairro" name="bairro" class="form-control input-sn"/><br>
+                        <label for="uf">UF:</label>
+                        <input type="text" id="uf" name="uf" class="form-control input-sn"/><br>
                          <!--<label for="municipio">Município:</label>
                         <input type="text" id="municipio" name="municipio" class="form-control input-sn"/><br>
                         <label for="uf">UF:</label>

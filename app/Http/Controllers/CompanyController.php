@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\CompanyUnity;
+use App\Libraries\Helpers;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -50,26 +51,28 @@ class CompanyController extends Controller
 
         $CompanyUnity = CompanyUnity::all();
         $Company      = Company::all();
-
-        $cnpj = preg_replace('/[^0-9]/', '',$request->cnpj);
-
+        
+        $telefone = preg_replace("/[^0-9]/",'',$request->fone1);
+        $cnpj     = preg_replace('/[^0-9]/', '',$request->cnpj); 
+        $cep      = preg_replace("/[^0-9]/",'',$request->cep);  
 
         if(Company::where('cnpj','=',$cnpj)->first()){
             Toastr::error('Empresa ja foi cadastrada','Erro');
             return redirect()->back();
         }else{
             if(Company::create([
-                'cnpj'                      =>  $cnpj,
-                'social_reason'             => $request->razao,
-               // 'fantasy_name'              =>$request->fantasy_name,
-                //'zip_code'                  =>$request->zip_code,
+                'cnpj'                      =>$cnpj,
+                'social_reason'             =>$request->razao,
+                'fantasy_name'              =>$request->fantasia,
+                'zip_code'                  =>$request->cep,
                 'public_place'              =>$request->logradouro,
                 'number'                    =>$request->numero,
-              //  'phone'                     =>$request->fone1,
-              //  'email'                     =>$request->email,
-               // 'complement'                =>$request->complement,
                 'district'                  =>$request->bairro,
-              //  'city'                      =>$request->city,
+                'city'                      =>$request->uf,
+                'email'                     =>$request->email,
+                'phone'                     =>$telefone,  
+                'complement'                =>$request->complemento,
+
                // 'segment_id'                =>$request->segment_id,
               //  'municipal_registration'    =>$request->municipal_registration,
                // 'state_registration'        =>$request->state_registration,
