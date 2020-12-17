@@ -8,13 +8,6 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    public function index(){
-        $Company = Company::all();
-        $CompanyUnity = CompanyUnity::all();
-        $count =  $Company->count();
-
-        return view('index',compact('Company','CompanyUnity','count'));
-    }
 
     protected function get(Request $request){
         $company               = new Company();
@@ -23,7 +16,7 @@ class CompanyController extends Controller
         $company->fantasy_name = $request->fantasy_name;
         $items = [];
         foreach($company->getCompany() as $comps){
-            array_push($items,(object)[                
+            array_push($items,(object)[
                 'id'                        => $comps->id,
                 'cnpj'                      => $comps->cnpj,
                 'social_reason'             => $comps->social_reason,
@@ -44,7 +37,7 @@ class CompanyController extends Controller
                 'updated_at'                => $comps->updated_at,
                 'deleted_at'                => $comps->deleted_at,
             ]);
-        }        
+        }
         return view('company.list',compact('items'));
     }
 

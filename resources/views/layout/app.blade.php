@@ -6,8 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+
 </head>
-<body> 
+<body>
   <title>Cadastro de Empresas</title>
 
 <!--navbar -->
@@ -21,7 +24,7 @@
         <ul class="navbar-nav mr-auto">
         <li class="nav-item {{ (Route::current()->getName() === 'index' ? 'active' : '') }}"><a class="nav-link" href="{{route('index')}}">Home</a></li>
         <li class="nav-item {{ (Route::current()->getName() === 'company.list' ? 'active' : '') }}"><a class="nav-link" href="{{route('company.list')}}">Empresas</a></li>
-        <li class="nav-item {{ (Route::current()->getName() === 'site.contact' ? 'active' : '') }}"><a class="nav-link" href="{{route('company_unity.list')}}">Unidades</a></li>
+        <li class="nav-item {{ (Route::current()->getName() === 'site.contact' ? 'active' : '') }}"><a class="nav-link" href="{{route('company_unity.index')}}">Unidades</a></li>
         <div class="btn-group" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Cadastrar
@@ -41,7 +44,7 @@
     </nav>
   </header>
     <!--main -->
-  <main role="main">      
+  <main role="main">
       @yield('content')
   </main>
   <!--footer-->
@@ -58,5 +61,43 @@
          $('.dataTables_length').addClass('bs-select');
       } );
   </script>
+  <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+  {!! Toastr::message() !!}
+
+<script src="{{ asset('js/sweetalert2.all.js') }}"></script>
+
+<script type="text/javascript">
+    function deleteAll(id) {
+        swal({
+            title: 'Deseja realmente excluir?',
+            text: "Escolha uma das opções abaixo:",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, desejo excluir!',
+            cancelButtonText: 'Não, cancele!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    'Cancelado',
+                    'Suas informações não foram excluidas :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+
 </body>
 </html>

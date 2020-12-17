@@ -2,68 +2,96 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\CompanyUnity;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class CompanyUnityController extends Controller
 {
-    protected function get(Request $request){
-        $CompanyUnity = new CompanyUnity();
-        $CompanyUnity->id           = $request->id;
-        $CompanyUnity->description  = $request->description;
 
+    protected function index(){
+        $CompanyUnity = new CompanyUnity();
         $items = [];
 
         foreach($CompanyUnity->getCompanyUnity() as $comps_u){
-            array_push($items,(object)[                
+            array_push($items,(object)[
                 'id'          => $comps_u->id,
-                'description' => $comps_u->description,                
+                'description' => $comps_u->description,
                 'created_at'  => $comps_u->created_at,
             ]);
-        }        
+        }
         return view('company_unity.list',compact('items'));
     }
 
     protected function create(){
-        return view('');
+        return view('company_unity.create');
     }
 
     protected function store(Request $request){
-        
-        if(CompanyUnity::where('description','=',$request->description)->first()){  
-             response()->json(array('success' => 'Unidade já cadastrada'));
+
+        //Variaveis para retornar o foreach do index
+        $CompanyUnity = CompanyUnity::all();
+        $Company      = Company::all();
+
+        //validação do request
+        $this->validate($request,[
+            'description' => 'required',
+        ],
+        [
+         'description.required' => 'Campo Unidade esta vazio!',
+        ]);
+
+        //validação para incluir os dados
+        if(CompanyUnity::where('description','=',$request->description)->first()){
+             Toastr::error('Unidade já cadastrada','Erro');
              return redirect()->back();
-        }else{  
-            if(CompanyUnity::create([            
-                'description' =>$request->description,               
+        }else{
+            if(CompanyUnity::create([
+                'description' =>$request->description,
                 'created_at'  =>\Carbon\Carbon::now(),
             ])){
-                response()->json(array('success' => 'Unidade Cadastrada com sucesso'));
-                return view('index');
+                Toastr::success('Unidade Cadastrada com sucesso','Sucesso');
+                return redirect()->route('index', compact('CompanyUnity','Company'));
             }else{
-                response()->json(array('error' => 'Erro ao cadastrar a Unidade'));
+                Toastr::error('Erro ao cadastrar a Unidade','Erro');
                 return redirect()->back();
-            } 
-        }         
-    }
-
-    protected function update(Request $request){
-        if($CompanyUnity = CompanyUnity::where('id','=',$request->id)->first()){                             
-            $CompanyUnity->description  = $request->description;         
-            $CompanyUnity->updated_at   = \Carbon\Carbon::now();
-            $CompanyUnity->save();
-            return response()->json(array('success' => 'Unidade Alterada com sucesso'));
-        }else{
-            return response()->json(array('error' => 'Erro ao localizar a Unidade'));
+            }
         }
     }
-    
-    protected function delete(Request $request){
-        if($CompanyUnity = CompanyUnity::where('id','=',$request->id)->first()){
-            $CompanyUnity->delete();
-            return response()->json(array('success' => 'Unidade excluida com sucesso'));
+
+    protected function edit($id)
+    {
+        $CompanyUnity = CompanyUnity::find($id);
+        return view('company_unity.alter', compact('CompanyUnity'));
+    }
+
+    protected function update(Request $request, $id){
+
+        $CompanyUnity = CompanyUnity::all();
+        $Company      = Company::all();
+
+        if($CompanyUnity = CompanyUnity::where('id','=',$id)->first()){
+            $CompanyUnity->description  = $request->description;
+            $CompanyUnity->updated_at   = \Carbon\Carbon::now();
+            $CompanyUnity->save();
+            Toastr::success('Unidade Alterada com sucesso','Sucesso');
+            return redirect()->route('index', compact('CompanyUnity','Company'));
         }else{
-            return response()->json(array('error' => 'Erro ao localizar a Unidade'));
+            Toastr::error('Erro ao localizar a Unidade','Erro');
+            return redirect()->back();
+        }
+    }
+
+    protected function destroy($id){
+        //validação para excluir
+        if($CompanyUnity = CompanyUnity::where('id','=',$id)->first()){
+            $CompanyUnity->delete();
+            Toastr::success('Unidade excluida com sucesso','Sucesso');
+            return redirect()->back();
+        }else{
+            Toastr::error('Erro ao encontar a Unidade','Erro');
+            return redirect()->back();
         }
     }
 }
