@@ -56,9 +56,7 @@ class Company extends Model
             comp.updated_at,
             comp.deleted_at
         ")
-        ->when($this->id, function($query, $id){
-            return $query->where('comp.id','=',$id);
-        })
+        ->whereNull('comp.deleted_at')
         ->when($this->cnpj, function($query, $cnpj){
             return $query->where('comp.cnpj','=',$cnpj);
         })

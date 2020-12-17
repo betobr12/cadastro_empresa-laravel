@@ -30,7 +30,7 @@
             Cadastrar
           </button>
           <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">Empresas</a>
+            <a class="dropdown-item" href="{{route('company.create')}}">Empresas</a>
           <a class="dropdown-item" href="{{route('company_unity.create')}}">Unidades</a>
           </div>
         </div>
@@ -97,6 +97,70 @@
             }
         })
     }
+</script>
+<script src="{{ asset('js/jquery.receita-ws.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        function fecharMensagem() {
+            setTimeout(function () {
+                $('#status').html('');
+                $('#cnpj').prop('disabled', false);
+            }, 2000);
+        }
+
+        $('#cnpj').receitaws({
+            afterRequest: function () {
+                var cnpj = $('#cnpj').val();
+                $('#status').html('<div class="alert alert-info">Buscando CNPJ</div>');
+                $('form').find("input[type=text]").val("");
+                $('#cnpj').val(cnpj);
+                $('#cnpj').prop('disabled', true);
+            },
+            success: function (data) {
+                $('#status').html('<div class="alert alert-success">CNPJ Encontrado</div>');
+
+                fecharMensagem();
+            },
+            fail: function (message) {
+                $('#status').html('<div class="alert alert-danger">' + message + '</div>');
+
+                fecharMensagem();
+            },
+            notfound: function (message) {
+                $('#status').html('<div class="alert alert-warning">CNPJ inexistente</div>');
+
+                fecharMensagem();
+            },
+
+            fields: {
+                nome: '#razao',
+                fantasia: '#fantasia',
+                logradouro: '#logradouro',
+                numero: '#numero',
+                bairro: '#bairro',
+                municipio: '#municipio',
+                uf: '#uf',
+
+                telefone: function (data) {
+                    var separa = data.split('/');
+                    if (typeof separa[0] != 'undefined') {
+                        $('#fone1').val(separa[0]);
+                    }
+                },
+                qsa: function (data) {
+                    var responsaveis = [];
+                    $.each(data, function(i, val) {
+                        if (typeof val != 'undefined') {
+                            responsaveis[i] = val.nome
+                        }
+                    });
+                    $('#responsavel').val(responsaveis.join(','));
+                }
+            }
+        });
+
+    });
 </script>
 
 </body>

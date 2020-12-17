@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,28 +13,38 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 /*
 Route::get('/', function () {
-    return view('index');
+    $client = new Client([
+        'base_uri' => 'https://www.receitaws.com.br/v1/cnpj/',
+        'timeout'  => 2.0,
+    ]);
+    $response = $client->request('GET', '47960950000121');
+     $consulta = $response->getBody()->getContents();
+    return view('company.create',compact('consulta'));
 });
 */
 
+
+
+
+
+
 Route::get('/'   ,'SiteController@index')->name('index');
 
-Route::resource('/company','ProductController');
+Route::resource('/company','CompanyController');
 Route::get('/company'   ,'CompanyController@get')->name('company.list');
 
-Route::post('/company'  ,'CompanyController@create');
-Route::put('/company'   ,'CompanyController@update');
-Route::delete('/company','CompanyController@delete');
+//Route::post('/company'  ,'CompanyController@create');
+//Route::put('/company'   ,'CompanyController@update');
+//Route::delete('/company','CompanyController@delete');
 
 Route::resource('/company_unity'     ,'CompanyUnityController');
 Route::get('/company_unity'     ,'CompanyUnityController@index')->name('company_unity.index');
 
-
-//Route::put('/company_unity'          ,'CompanyUnityController@update');
-//Route::delete('/company_unity'          ,'CompanyUnityController@delete');
-
 Route::post('/unity_relationship'       ,'UnityRelationshipController@create');
 Route::get('/unity_relationship'        ,'UnityRelationshipController@get');
 Route::delete('/unity_relationship'     ,'UnityRelationshipController@delete');
+

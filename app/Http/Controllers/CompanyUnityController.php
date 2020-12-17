@@ -60,8 +60,8 @@ class CompanyUnityController extends Controller
         }
     }
 
-    protected function edit($id)
-    {
+    protected function edit($id){
+
         $CompanyUnity = CompanyUnity::find($id);
         return view('company_unity.alter', compact('CompanyUnity'));
     }
