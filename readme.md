@@ -19,3 +19,5 @@
 
 #via cep
 <p>https://www.youtube.com/watch?v=INhj9Rg3VBI</p>
+
+<p>https://viacep.com.br/exemplo/jquery/</p>
