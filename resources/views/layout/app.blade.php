@@ -12,7 +12,6 @@
 </head>
 <body>
   <title>Cadastro de Empresas</title>
-
 <!--navbar -->
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -34,12 +33,7 @@
           <a class="dropdown-item" href="{{route('company_unity.create')}}">Unidades</a>
           </div>
         </div>
-
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Procurar</button>
-        </form>
       </div>
     </nav>
   </header>

@@ -47,7 +47,6 @@ class CompanyController extends Controller
     protected function create(){
         $Segment      = new Segment();
         $getSegment   = $Segment->getSegment();
-
         return view('company.create', compact('getSegment'));
     }
 
@@ -146,12 +145,20 @@ class CompanyController extends Controller
         }
     }
 
-    protected function delete(Request $request){
-        if($Company = Company::where('id','=',$request->id)->first()){
+    protected function show($id){
+        $Company = Company::where('id','=',$id)->first();
+
+        return view('company.show', compact('Company'));
+    }
+
+    protected function destroy($id){
+        if($Company = Company::where('id','=',$id)->first()){
             $Company->delete();
-            return response()->json(array('success' => 'Empresa excluida com sucesso'));
+            Toastr::success('Empresa excluida com sucesso','Sucesso');
+            return redirect()->route('index', compact('CompanyUnity','Company'));
         }else{
-            return response()->json(array('error' => 'Erro ao localizar a empresa'));
+            Toastr::error('Erro ao localizar a empresa','Erro');
+            return redirect()->back();
         }
     }
 }
