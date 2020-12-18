@@ -24,6 +24,7 @@ class Company extends Model
         'complement',
         'district',
         'city',
+        'state',
         'segment_id',
         'municipal_registration',
         'state_registration',
@@ -57,12 +58,11 @@ class Company extends Model
             comp.deleted_at
         ")
         ->whereNull('comp.deleted_at')
-        ->when($this->cnpj, function($query, $cnpj){
-            return $query->where('comp.cnpj','=',$cnpj);
+
+        ->when($this->id, function($query, $id){
+            return $query->where('comp.id','=',$id);
         })
-        ->when($this->fantasy_name, function($query, $fantasy_name){
-            return $query->where('comp.fantasy_name','=',$fantasy_name);
-        })
+
         ->get();
     }
 

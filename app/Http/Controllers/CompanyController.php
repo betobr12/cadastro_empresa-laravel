@@ -18,10 +18,11 @@ class CompanyController extends Controller
         $company->cnpj         = $request->cnpj;
         $company->fantasy_name = $request->fantasy_name;
         $items = [];
+        $helpers               = new Helpers(); 
         foreach($company->getCompany() as $comps){
             array_push($items,(object)[
                 'id'                        => $comps->id,
-                'cnpj'                      => $comps->cnpj,
+                'cnpj'                      => $helpers->mask_cpf_cnpj($comps->cnpj),
                 'social_reason'             => $comps->social_reason,
                 'fantasy_name'              => $comps->fantasy_name,
                 'zip_code'                  => $comps->zip_code,
@@ -54,7 +55,6 @@ class CompanyController extends Controller
 
         $CompanyUnity = CompanyUnity::all();
         $Company      = Company::all();
-
         $this->validate($request,[
             'cnpj'                      => 'required',
             'razao'                     => 'required',
@@ -89,6 +89,7 @@ class CompanyController extends Controller
         $telefone = preg_replace("/[^0-9]/",'',$request->fone1);
         $cnpj     = preg_replace('/[^0-9]/', '',$request->cnpj);
         $cep      = preg_replace("/[^0-9]/",'',$request->cep);
+        
 
         if(Company::where('cnpj','=',$cnpj)->first()){
             Toastr::error('Empresa ja foi cadastrada','Erro');
@@ -120,42 +121,78 @@ class CompanyController extends Controller
         }
     }
 
-    protected function update(Request $request){
-        if($Company = Company::where('id','=',$request->id)->first()){
-            $Company->cnpj                   = $request->cnpj;
-            $Company->social_reason          = $request->social_reason;
+    protected function edit($id){
+        $Company      = Company::find($id);
+        $Segment      = new Segment();
+        $getSegment   = $Segment->getSegment();
+        return view('company.alter', compact('Company','getSegment'));
+
+    }
+
+    protected function update(Request $request, $id){
+        $CompanyUnity = CompanyUnity::all();
+        $Company      = Company::all();
+
+        $telefone = preg_replace("/[^0-9]/",'',$request->fone1);
+        $cnpj     = preg_replace('/[^0-9]/', '',$request->cnpj);
+        $cep      = preg_replace("/[^0-9]/",'',$request->cep);
+
+        if($Company = Company::where('id','=',$id)->first()){
+            $Company->cnpj                   = $cnpj ;
+            $Company->social_reason          = $request->razao;
             $Company->fantasy_name           = $request->fantasy_name;
-            $Company->zip_code               = $request->zip_code;
-            $Company->public_place           = $request->public_place;
-            $Company->number                 = $request->number;
-            $Company->phone                  = $request->phone;
+            $Company->zip_code               = $cep;
+            $Company->public_place           = $request->logradouro;
+            $Company->number                 = $request->numero;
+            $Company->phone                  = $telefone;
             $Company->email                  = $request->email;
-            $Company->complement             = $request->complement;
-            $Company->district               = $request->district;
-            $Company->city                   = $request->city;
+            $Company->complement             = $request->complemento;
+            $Company->district               = $request->bairro;
+            $Company->state                  = $request->uf;
             $Company->segment_id             = $request->segment_id;
             $Company->municipal_registration = $request->municipal_registration;
             $Company->state_registration     = $request->state_registration;
             $Company->updated_at             = \Carbon\Carbon::now();
             $Company->save();
-
-            return response()->json(array('success' => 'Empresa Alterada com sucesso'));
+            Toastr::success('Empresa Alterada com sucesso','Sucesso');
+            return redirect()->route('index', compact('CompanyUnity','Company'));
         }else{
-            return response()->json(array('error' => 'Erro ao localizar a empresa'));
-        }
+            Toastr::error('Erro ao localizar a empresa','Erro');
+            return redirect()->back();
+    }
     }
 
-    protected function show($id){
-        $Company = Company::where('id','=',$id)->first();
-
-        return view('company.show', compact('Company'));
+    public function show(Request $request, $id){
+        $company               = new Company();
+        $company->id           = $id;
+        $compsData             = $company->getCompany()->first();      
+        $helpers               = new Helpers(); 
+         $company_data = (object) array(  
+            'id'                        => $id,
+            'cnpj'                      => $helpers->mask_cpf_cnpj($compsData->cnpj),
+            'social_reason'             => $compsData->social_reason,
+            'fantasy_name'              => $compsData->fantasy_name,            
+            'public_place'              => $compsData->public_place,
+            'zip_code'                  => $helpers->mask_cep($compsData->zip_code),
+            'number'                    => $compsData->number,
+            'district'                  => $compsData->district,
+            'city'                      => $compsData->city,
+            'complement'                => $compsData->complement,     
+            'phone'                     => $helpers->mask_phone($compsData->phone),
+            'email'                     => $compsData->email,                   
+            'seg_description'           => $compsData->seg_description,
+            'municipal_registration'    => $compsData->municipal_registration,
+            'state_registration'        => $compsData->state_registration,
+            'created_at'                => $compsData->created_at,
+        );  
+        return view('company.show', compact('company_data'));
     }
 
     protected function destroy($id){
         if($Company = Company::where('id','=',$id)->first()){
             $Company->delete();
             Toastr::success('Empresa excluida com sucesso','Sucesso');
-            return redirect()->route('index', compact('CompanyUnity','Company'));
+            return redirect()->back();
         }else{
             Toastr::error('Erro ao localizar a empresa','Erro');
             return redirect()->back();

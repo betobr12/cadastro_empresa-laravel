@@ -34,7 +34,7 @@
   @foreach ($Company as $Comp)
   <div class="row featurette">
     <div class="col-md-7">
-        <a class="btn btn-secondary" href="{{route('company.show', $CompanyUni->id)}}" >
+        <a class="btn btn-secondary" href="{{route('company.show', $Comp->id)}}" >
       <h2 class="featurette-heading">{{$Comp->social_reason}} <span class="text-muted">-CNPJ {{$Comp->cnpj}}</span></h2>
         <p class="lead">{{$Comp->public_place}}, {{$Comp->number}}, {{$Comp->city}} {{$Comp->zip_code}}</p>
     </a>

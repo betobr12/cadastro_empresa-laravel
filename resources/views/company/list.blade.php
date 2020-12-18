@@ -21,7 +21,16 @@
                     <td>{{$comp->social_reason}}</td>
                     <td>{{$comp->fantasy_name}}</td>
                     <td>{{$comp->seg_description}}</td>
-                    <td></td>                             
+                    <td>
+                        <a href="{{route('company.edit', $comp->id)}}" class="btn btn-primary">Alterar</a>
+                        <button class="btn btn-danger" type="button" onclick="deleteAll({{ $comp->id }})">
+                            Excluir
+                        </button>
+                        <form id="delete-form-{{ $comp->id }}" action="{{ route('company.destroy',$comp->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>                        
+                    </td>                             
                 </tr>              
             @endforeach
         </tbody>

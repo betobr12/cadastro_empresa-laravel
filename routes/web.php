@@ -15,22 +15,11 @@
 */
 
 
-/*
-Route::get('/', function () {
-    $client = new Client([
-        'base_uri' => 'https://www.receitaws.com.br/v1/cnpj/',
-        'timeout'  => 2.0,
-    ]);
-    $response = $client->request('GET', '47960950000121');
-     $consulta = $response->getBody()->getContents();
-    return view('company.create',compact('consulta'));
+
+Route::get('/cep', function () {
+
+    return view('cep');
 });
-*/
-
-
-
-
-
 
 Route::get('/'   ,'SiteController@index')->name('index');
 
