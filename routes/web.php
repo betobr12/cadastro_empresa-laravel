@@ -44,7 +44,7 @@ Route::get('/company'   ,'CompanyController@get')->name('company.list');
 Route::resource('/company_unity'     ,'CompanyUnityController');
 Route::get('/company_unity'     ,'CompanyUnityController@index')->name('company_unity.index');
 
-Route::post('/unity_relationship'       ,'UnityRelationshipController@create');
-Route::get('/unity_relationship'        ,'UnityRelationshipController@get');
-Route::delete('/unity_relationship'     ,'UnityRelationshipController@delete');
+Route::resource('/unity_relationship'       ,'UnityRelationshipController');
+Route::get('/unity_relationship'            ,'UnityRelationshipController@get')->name('unity_relationship.list');
+//Route::delete('/unity_relationship'     ,'UnityRelationshipController@delete');
 

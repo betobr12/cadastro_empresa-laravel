@@ -3,6 +3,7 @@
 <?php
 
 namespace App\Libraries;
+
 use App\Libraries\GuzzleRequests;
 
 class ViaCep{

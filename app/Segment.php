@@ -23,7 +23,8 @@ class Segment extends Model
         return DB::table('segments')
         ->selectRaw("
             id,
-            description,
-        ")->get();
+            description
+        ")
+        ->get();
     }
 }

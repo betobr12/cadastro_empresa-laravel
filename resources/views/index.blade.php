@@ -17,17 +17,15 @@
 <div class="container marketing">
   <div class="row">
   @foreach ($CompanyUnity as $CompanyUni)
-
   <div class="col-lg-4">
     <svg class="bd-placeholder-img rounded-circle" width="140" height="140">
       <title>Empresa</title>
       <rect width="100%" height="100%" fill="#777"/>
       <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-
     </svg>
     <h2>{{$CompanyUni->description}}</h2>
     <p>{{$CompanyUni->description}}</p>
-    <p><a class="btn btn-secondary" href="#" role="button">Cadastrar empresas da Unidade&raquo;</a></p>
+    <p><a class="btn btn-secondary" href="{{route('unity_relationship.show', $CompanyUni->id)}}" role="button">Cadastrar empresas para Unidade&raquo;</a></p>
   </div><!-- /.col-lg-4 -->
   @endforeach
   </div><!-- /.row -->
@@ -37,7 +35,7 @@
   <div class="row featurette">
     <div class="col-md-7">
       <h2 class="featurette-heading">{{$Comp->social_reason}} <span class="text-muted">-CNPJ {{$Comp->cnpj}}</span></h2>
-    <p class="lead">{{$Comp->public_place}}, {{$Comp->number}}, {{$Comp->city}}</p>
+        <p class="lead">{{$Comp->public_place}}, {{$Comp->number}}, {{$Comp->city}} {{$Comp->zip_code}}</p>
     </div>
     <div class="col-md-5">
       <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>

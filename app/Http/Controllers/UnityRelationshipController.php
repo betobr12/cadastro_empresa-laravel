@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\CompanyUnity;
 use App\UnityRelationship;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class UnityRelationshipController extends Controller
 {
@@ -15,27 +17,43 @@ class UnityRelationshipController extends Controller
         return response()->json($UnityRelationship->getUnityRelationship());
     }
 
-    protected function create(Request $request){
-        if(CompanyUnity::where('id','=',$request->company_unity_id)->first()){ //validando se a unidade existe
+    protected function show($id){
+
+      $company_unity = CompanyUnity::find($id);
+
+      $getUnityRelationship = new UnityRelationship();
+      $getUnityRelationship->comp_uni_id = $id;
+      $companies = $getUnityRelationship->getUnityRelationship();
+      $company        = new Company();
+      $company_select = $company->getCompany();
+      return view('unity_relationship.create',compact('company_unity','companies','company_select'));
+    }
+
+    protected function store(Request $request){
+        if(CompanyUnity::where('id','=',$request->id_comp)->first()){ //validando se a unidade existe
             if(UnityRelationship::where('company_id','=',$request->company_id)->first()){  //verificando se company ja foi cadastrado
-                return response()->json(array('success' => 'Empresa já vinculada a unidade'));
-            }else{  
-                if(UnityRelationship::create([ //se estiver tudo ok  efetua o vinculo           
-                    'company_unity_id'  =>$request->company_unity_id,               
-                    'company_id'        =>$request->company_id,               
-                    'created_at'        =>\Carbon\Carbon::now(),
+                Toastr::error('Empresa já foi vinculada a unidade','Erro');
+                return redirect()->back();
+            }else{
+                if(UnityRelationship::create([ //se estiver tudo ok  efetua o vinculo
+                    'company_id'        => $request->company_id,
+                    'company_unity_id'  => $request->company_unity_id,
+                    'created_at'        => \Carbon\Carbon::now(),
                 ])){
-                    return response()->json(array('success' => 'Empresa vinculada a unidade com sucesso'));
+                    Toastr::success('Vinculo efetuado com sucesso','Sucesso');
+                    return redirect()->back();
                 }else{
-                    return response()->json(array('error' => 'Erro ao vicular'));
-                } 
+                    Toastr::error('Erro ao Vincular','Erro');
+                    return redirect()->back();
+                }
             }
         }else{
-            return response()->json(array('error' => 'Erro ao localizar a unidade'));
-        }                
+            Toastr::error('Erro ao Localizar','Erro');
+            return redirect()->back();
+        }
     }
-    protected function delete(Request $request){
-        if($UnityRelationship = UnityRelationship::where('id','=',$request->id)->first()){ //verifica se o id exite
+    protected function destroy($id){
+        if($UnityRelationship = UnityRelationship::where('id','=',$id)->first()){ //verifica se o id exite
             $UnityRelationship->delete();
             return response()->json(array('success' => 'Vinculo excluido com sucesso'));
         }else{

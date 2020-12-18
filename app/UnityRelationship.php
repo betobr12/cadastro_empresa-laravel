@@ -26,13 +26,15 @@ class UnityRelationship extends Model
         ->leftJoin('companies        as comp'    ,'comp.id'    ,'=','unit_rel.company_id')
         ->selectRaw("
             unit_rel.id,
-            comp_uni.id              as comp_uni_id,    
-            comp_uni.description     as comp_uni_description,    
+            comp_uni.id              as comp_uni_id,
+            comp_uni.description     as comp_uni_description,
             comp.id                  as comp_id,
             comp.cnpj                as comp_cnpj,
             comp.social_reason       as comp_social_reason,
-            comp.fantasy_name        as comp_fantasy_name            
+            comp.fantasy_name        as comp_fantasy_name,
+            unit_rel.deleted_at
         ")
+        ->whereNull('unit_rel.deleted_at')
         ->when($this->id, function($query, $id){
             return $query->where('unit_rel.id','=',$id);
         })

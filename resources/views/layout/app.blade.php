@@ -139,7 +139,7 @@
                 numero: '#numero',
                 bairro: '#bairro',
                 municipio: '#municipio',
-                uf: '#uf',                
+                uf: '#uf',
                 email: '#email',
                 telefone: '#telefone',
                 complemento: '#complemento',

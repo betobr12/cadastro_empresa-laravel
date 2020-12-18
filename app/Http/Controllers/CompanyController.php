@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\CompanyUnity;
 use App\Libraries\Helpers;
+use App\Segment;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -44,17 +45,51 @@ class CompanyController extends Controller
     }
 
     protected function create(){
-        return view('company.create');
+        $Segment      = new Segment();
+        $getSegment   = $Segment->getSegment();
+
+        return view('company.create', compact('getSegment'));
     }
 
     protected function store(Request $request){
 
         $CompanyUnity = CompanyUnity::all();
         $Company      = Company::all();
-        
+
+        $this->validate($request,[
+            'cnpj'                      => 'required',
+            'razao'                     => 'required',
+            'fantasia'                  => 'required',
+            'cep'                       => 'required',
+            'logradouro'                => 'required',
+            'numero'                    => 'required',
+            'bairro'                    => 'required',
+            'uf'                        => 'required',
+            'email'                     => 'required',
+            'fone1'                     => 'required',
+            'complemento'               => 'required',
+            'segment_id'                => 'required',
+            'municipal_registration'    => 'required',
+        ],
+        [
+            'cnpj.required'                     => 'Campo cnpj esta vazio!',
+            'razao.required'                    => 'Campo razao esta vazio!',
+            'fantasia.required'                 => 'Campo fantasia esta vazio!',
+            'cep.required'                      => 'Campo cep esta vazio!',
+            'logradouro.required'               => 'Campo logradouro esta vazio!',
+            'numero.required'                   => 'Campo numero esta vazio!',
+            'bairro.required'                   => 'Campo bairro esta vazio!',
+            'uf.required'                       => 'Campo uf esta vazio!',
+            'email.required'                    => 'Campo email esta vazio!',
+            'fone1.required'                    => 'Campo telefone esta vazio!',
+            'complemento.required'              => 'Campo complemento esta vazio!',
+            'segment_id.required'               => 'Campo Seguimento esta vazio!',
+            'municipal_registration.required'   => 'Campo Inscrição municipal esta vazio!',
+        ]);
+
         $telefone = preg_replace("/[^0-9]/",'',$request->fone1);
-        $cnpj     = preg_replace('/[^0-9]/', '',$request->cnpj); 
-        $cep      = preg_replace("/[^0-9]/",'',$request->cep);  
+        $cnpj     = preg_replace('/[^0-9]/', '',$request->cnpj);
+        $cep      = preg_replace("/[^0-9]/",'',$request->cep);
 
         if(Company::where('cnpj','=',$cnpj)->first()){
             Toastr::error('Empresa ja foi cadastrada','Erro');
@@ -64,18 +99,17 @@ class CompanyController extends Controller
                 'cnpj'                      =>$cnpj,
                 'social_reason'             =>$request->razao,
                 'fantasy_name'              =>$request->fantasia,
-                'zip_code'                  =>$request->cep,
+                'zip_code'                  =>$cep,
                 'public_place'              =>$request->logradouro,
                 'number'                    =>$request->numero,
                 'district'                  =>$request->bairro,
-                'city'                      =>$request->uf,
+                'state'                     =>$request->uf,
                 'email'                     =>$request->email,
-                'phone'                     =>$telefone,  
+                'phone'                     =>$telefone,
                 'complement'                =>$request->complemento,
-
-               // 'segment_id'                =>$request->segment_id,
-              //  'municipal_registration'    =>$request->municipal_registration,
-               // 'state_registration'        =>$request->state_registration,
+                'segment_id'                =>$request->segment_id,
+                'municipal_registration'    =>$request->municipal_registration,
+                'state_registration'        =>$request->state_registration,
                 'created_at'                =>\Carbon\Carbon::now(),
             ])){
                 Toastr::success('Empresa Cadastrada com sucesso','Sucesso');
@@ -84,7 +118,6 @@ class CompanyController extends Controller
                 Toastr::error('Erro ao cadastrar a Empresa','Erro');
                 return redirect()->back();
             }
-
         }
     }
 
