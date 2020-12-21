@@ -18,7 +18,7 @@ class CompanyController extends Controller
         $company->cnpj         = $request->cnpj;
         $company->fantasy_name = $request->fantasy_name;
         $items = [];
-        $helpers               = new Helpers(); 
+        $helpers               = new Helpers();
         foreach($company->getCompany() as $comps){
             array_push($items,(object)[
                 'id'                        => $comps->id,
@@ -89,7 +89,7 @@ class CompanyController extends Controller
         $telefone = preg_replace("/[^0-9]/",'',$request->fone1);
         $cnpj     = preg_replace('/[^0-9]/', '',$request->cnpj);
         $cep      = preg_replace("/[^0-9]/",'',$request->cep);
-        
+
 
         if(Company::where('cnpj','=',$cnpj)->first()){
             Toastr::error('Empresa ja foi cadastrada','Erro');
@@ -140,7 +140,7 @@ class CompanyController extends Controller
         if($Company = Company::where('id','=',$id)->first()){
             $Company->cnpj                   = $cnpj ;
             $Company->social_reason          = $request->razao;
-            $Company->fantasy_name           = $request->fantasy_name;
+            $Company->fantasy_name           = $request->fantasia;
             $Company->zip_code               = $cep;
             $Company->public_place           = $request->logradouro;
             $Company->number                 = $request->numero;
@@ -165,26 +165,26 @@ class CompanyController extends Controller
     public function show(Request $request, $id){
         $company               = new Company();
         $company->id           = $id;
-        $compsData             = $company->getCompany()->first();      
-        $helpers               = new Helpers(); 
-         $company_data = (object) array(  
+        $compsData             = $company->getCompany()->first();
+        $helpers               = new Helpers();
+         $company_data = (object) array(
             'id'                        => $id,
             'cnpj'                      => $helpers->mask_cpf_cnpj($compsData->cnpj),
             'social_reason'             => $compsData->social_reason,
-            'fantasy_name'              => $compsData->fantasy_name,            
+            'fantasy_name'              => $compsData->fantasy_name,
             'public_place'              => $compsData->public_place,
             'zip_code'                  => $helpers->mask_cep($compsData->zip_code),
             'number'                    => $compsData->number,
             'district'                  => $compsData->district,
             'city'                      => $compsData->city,
-            'complement'                => $compsData->complement,     
+            'complement'                => $compsData->complement,
             'phone'                     => $helpers->mask_phone($compsData->phone),
-            'email'                     => $compsData->email,                   
+            'email'                     => $compsData->email,
             'seg_description'           => $compsData->seg_description,
             'municipal_registration'    => $compsData->municipal_registration,
             'state_registration'        => $compsData->state_registration,
             'created_at'                => $compsData->created_at,
-        );  
+        );
         return view('company.show', compact('company_data'));
     }
 
