@@ -15,12 +15,6 @@
 */
 
 
-
-Route::get('/cep', function () {
-
-    return view('cep');
-});
-
 Route::get('/'   ,'SiteController@index')->name('index');
 
 Route::resource('/company','CompanyController');
