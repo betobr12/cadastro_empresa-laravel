@@ -34,7 +34,7 @@
                     <label for="cep">CEP:</label>
                     <input type="text" id="cep" name="cep" class="form-control input-sn" /><br>
                     <label for="logradouro">Logradouro:</label>
-                    <input type="text" id="logradouro" name="logradouro" class="form-control input-sn"/><br>
+                    <input type="text" id="rua" name="rua" class="form-control input-sn"/><br>
                     <label for="numero">Número:</label>
                     <input type="text" id="numero" name="numero" class="form-control input-sn"/><br>
                     <label for="complemento">Complemento:</label>

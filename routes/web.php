@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,20 +11,15 @@
 |
 */
 
-
 Route::get('/'   ,'SiteController@index')->name('index');
 
 Route::resource('/company','CompanyController');
 Route::get('/company'   ,'CompanyController@get')->name('company.list');
-
-//Route::post('/company'  ,'CompanyController@create');
-//Route::put('/company'   ,'CompanyController@update');
-//Route::delete('/company','CompanyController@delete');
 
 Route::resource('/company_unity'     ,'CompanyUnityController');
 Route::get('/company_unity'     ,'CompanyUnityController@index')->name('company_unity.index');
 
 Route::resource('/unity_relationship'       ,'UnityRelationshipController');
 Route::get('/unity_relationship'            ,'UnityRelationshipController@get')->name('unity_relationship.list');
-//Route::delete('/unity_relationship'     ,'UnityRelationshipController@delete');
+
 

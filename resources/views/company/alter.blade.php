@@ -36,7 +36,7 @@
                     <label for="cep">CEP:</label>
                     <input type="text" id="cep" name="cep" value="{{$Company->zip_code}}" class="form-control input-sn"/><br>
                     <label for="logradouro">Logradouro:</label>
-                    <input type="text" id="logradouro" name="logradouro" value="{{$Company->public_place}}" class="form-control input-sn"/><br>
+                    <input type="text" id="rua" name="rua" value="{{$Company->public_place}}" class="form-control input-sn"/><br>
                     <label for="numero">Número:</label>
                     <input type="text" id="numero" name="numero" value="{{$Company->number}}" class="form-control input-sn"/><br>
                     <label for="complemento">Complemento:</label>

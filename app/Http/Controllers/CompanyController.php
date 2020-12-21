@@ -60,7 +60,7 @@ class CompanyController extends Controller
             'razao'                     => 'required',
             'fantasia'                  => 'required',
             'cep'                       => 'required',
-            'logradouro'                => 'required',
+            'rua'                       => 'required',
             'numero'                    => 'required',
             'bairro'                    => 'required',
             'uf'                        => 'required',
@@ -75,7 +75,7 @@ class CompanyController extends Controller
             'razao.required'                    => 'Campo razao esta vazio!',
             'fantasia.required'                 => 'Campo fantasia esta vazio!',
             'cep.required'                      => 'Campo cep esta vazio!',
-            'logradouro.required'               => 'Campo logradouro esta vazio!',
+            'rua.required'                      => 'Campo logradouro esta vazio!',
             'numero.required'                   => 'Campo numero esta vazio!',
             'bairro.required'                   => 'Campo bairro esta vazio!',
             'uf.required'                       => 'Campo uf esta vazio!',
@@ -100,7 +100,7 @@ class CompanyController extends Controller
                 'social_reason'             =>$request->razao,
                 'fantasy_name'              =>$request->fantasia,
                 'zip_code'                  =>$cep,
-                'public_place'              =>$request->logradouro,
+                'public_place'              =>$request->rua,
                 'number'                    =>$request->numero,
                 'district'                  =>$request->bairro,
                 'state'                     =>$request->uf,
@@ -142,7 +142,7 @@ class CompanyController extends Controller
             $Company->social_reason          = $request->razao;
             $Company->fantasy_name           = $request->fantasia;
             $Company->zip_code               = $cep;
-            $Company->public_place           = $request->logradouro;
+            $Company->public_place           = $request->rua;
             $Company->number                 = $request->numero;
             $Company->phone                  = $telefone;
             $Company->email                  = $request->email;
