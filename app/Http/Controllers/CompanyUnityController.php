@@ -29,20 +29,17 @@ class CompanyUnityController extends Controller
     }
 
     protected function store(Request $request){
-
-        //Variaveis para retornar o foreach do index
+        
         $CompanyUnity = CompanyUnity::all();
         $Company      = Company::all();
 
-        //validação do request
         $this->validate($request,[
             'description' => 'required',
         ],
         [
          'description.required' => 'Campo Unidade esta vazio!',
         ]);
-
-        //validação para incluir os dados
+        
         if(CompanyUnity::where('description','=',$request->description)->first()){
              Toastr::error('Unidade já cadastrada','Erro');
              return redirect()->back();
@@ -84,7 +81,7 @@ class CompanyUnityController extends Controller
     }
 
     protected function destroy($id){
-        //validação para excluir
+        
         if($CompanyUnity = CompanyUnity::where('id','=',$id)->first()){
             $CompanyUnity->delete();
             Toastr::success('Unidade excluida com sucesso','Sucesso');
