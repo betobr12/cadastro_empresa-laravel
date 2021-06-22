@@ -10,7 +10,7 @@ use Brian2694\Toastr\Facades\Toastr;
 
 class UnityRelationshipController extends Controller
 {
-    protected function get(Request $request){ // efetua pesquisa
+    protected function get(Request $request){ 
         $UnityRelationship = new UnityRelationship();
         $UnityRelationship->id          = $request->id;
         $UnityRelationship->comp_uni_id = $request->comp_uni_id;
@@ -30,12 +30,12 @@ class UnityRelationshipController extends Controller
     }
 
     protected function store(Request $request){
-        if(CompanyUnity::where('id','=',$request->id_comp)->first()){ //validando se a unidade existe
-            if(UnityRelationship::where('company_id','=',$request->company_id)->first()){  //verificando se company ja foi cadastrado
+        if(CompanyUnity::where('id','=',$request->id_comp)->first()){ 
+            if(UnityRelationship::where('company_id','=',$request->company_id)->first()){ 
                 Toastr::error('Empresa já foi vinculada a uma das unidades','Erro');
                 return redirect()->back();
             }else{
-                if(UnityRelationship::create([ //se estiver tudo ok  efetua o vinculo
+                if(UnityRelationship::create([ 
                     'company_id'        => $request->company_id,
                     'company_unity_id'  => $request->company_unity_id,
                     'created_at'        => \Carbon\Carbon::now(),
@@ -53,7 +53,7 @@ class UnityRelationshipController extends Controller
         }
     }
     protected function destroy($id){
-        if($UnityRelationship = UnityRelationship::where('id','=',$id)->first()){ //verifica se o id existe
+        if($UnityRelationship = UnityRelationship::where('id','=',$id)->first()){ 
             $UnityRelationship->delete();
             Toastr::success('Vinculo excluido com sucesso','Erro');
             return redirect()->back();
